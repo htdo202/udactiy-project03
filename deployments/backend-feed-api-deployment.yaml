@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend-feed
-        image: htdo202/udagram-api-feed:v1
+        image: htdo202/udagram-api-feed:v3
         imagePullPolicy: Always  
         resources:
           requests:

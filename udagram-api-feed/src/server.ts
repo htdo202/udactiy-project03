@@ -1,22 +1,19 @@
 import cors from 'cors';
 import express from 'express';
-import bodyParser from 'body-parser';
+import {sequelize} from './sequelize';
 
-import { sequelize } from './sequelize';
-import { IndexRouter } from './controllers/v0/router';
-import { config } from './config/config';
-import { V0_FEED_MODELS } from './controllers/v0/model';
+import {IndexRouter} from './controllers/v0/index.router';
+
+import bodyParser from 'body-parser';
+import {config} from './config/config';
+import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
 (async () => {
   await sequelize.addModels(V0_FEED_MODELS);
 
-  try {
-    console.debug('Initialize database connection...');
-    await sequelize.sync();
-  } catch (error) {
-    console.log('Connect to database failed! Error:', error);
-  }
-  
+  console.debug("Initialize database connection...");
+  await sequelize.sync();
+
   const app = express();
   const port = process.env.PORT || 8080;
 
@@ -33,20 +30,20 @@ import { V0_FEED_MODELS } from './controllers/v0/model';
     ],
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
     preflightContinue: true,
-    origin: config.url,
+    origin: '*',
   }));
 
   app.use('/api/v0/', IndexRouter);
 
   // Root URI call
-  app.get('/', async (req: express.Request, res: express.Response) => {
-    res.send('/api/v0/');
-  });
+  app.get( '/', async ( req, res ) => {
+    res.send( '/api/v0/' );
+  } );
 
 
   // Start the Server
-  app.listen(port, () => {
-    console.log(`server running ${config.url}`);
-    console.log('press CTRL+C to stop server');
-  });
+  app.listen( port, () => {
+    console.log( `server running ${config.url}` );
+    console.log( `press CTRL+C to stop server` );
+  } );
 })();

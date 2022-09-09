@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: htdo202/udagram-frontend:v1
+        image: htdo202/udagram-frontend:v3
         imagePullPolicy: Always          
         ports:
         - containerPort: 80

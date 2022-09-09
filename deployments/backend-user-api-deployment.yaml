@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend-user
-        image: htdo202/udagram-api-user:v1
+        image: htdo202/udagram-api-user:v3
         imagePullPolicy: Always  
         resources:
           requests:
